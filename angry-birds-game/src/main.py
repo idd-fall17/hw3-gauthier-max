@@ -363,6 +363,7 @@ level.load_level()
 final_distance = 0
 previous_distance = 0
 distance_band =""
+angle_band_float = 0
 while running:
     # Input handling
     if (not mouse_pressed):
@@ -534,21 +535,34 @@ while running:
     
     if distance_band != "":
         distance_band_float = float(distance_band)
+        previous_angle = angle_band_float
         angle_band_float = float(angle_band)
+        print "ANGLE"
+        print previous_angle, angle_band_float
+        print abs(previous_angle - angle_band_float)
+        #if abs(previous_angle - angle_band_float) > 0.08:
+            #translated_distance = translate(distance_band_float, 0.1, 0.9, 0, 90)
         
-        translated_distance = translate(distance_band_float, 0.1, 0.9, 0, 90)
-        translated_angle = translate(angle_band_float, 0, 1, -math.pi / 2, math.pi / 2)
         
-        previous_distance = final_distance
-        final_distance = 90 - translated_distance
-        
-        if final_distance < 30 and previous_distance - final_distance > 5 :
-            mouse_pressed = False
+        if (distance_band_float < 0.8 or distance_band_float > 1.25 or angle_band_float < 1.8 or angle_band_float > 2.1 ):
+            error = 1
+        else:
+            error = 0
+            translated_distance = translate(distance_band_float, 0.8, 1.25, 0, 90)
+            translated_angle = translate(angle_band_float, 1.8, 2.1, -math.pi / 2, math.pi / 2)
+            
+            translated_angle = -translated_angle
+            previous_distance = final_distance
+            final_distance = translated_distance
+            
+            if final_distance < 30 and previous_distance - final_distance > 10 :
+                mouse_pressed = False
         
         #print "==="
-     
-    #distance_band = 0
     
+    #if error == 0:
+    #distance_band = 0
+    print final_distance, translated_angle
     if mouse_pressed and level.number_of_birds > 0:
         sling_action(final_distance, translated_angle)
     else:
