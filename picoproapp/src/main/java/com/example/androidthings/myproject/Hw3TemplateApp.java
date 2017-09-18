@@ -53,8 +53,11 @@ public class Hw3TemplateApp extends SimplePicoPro {
         a1 = analogRead(A1);
         a2 = analogRead(A2);
         a3 = analogRead(A3);
-        println(UART6,"A0: "+a0+"   A1: "+a1+"   A2: "+a2+"   A3: "+a3); // this goes to the Serial port
-        println("A0: "+a0+"   A1: "+a1+"   A2: "+a2+"   A3: "+a3); // this goes to the Android Monitor in Android Studio
+        //println(UART6,"A0: "+a0+"   A1: "+a1); // this goes to the Serial port
+        println(UART6, Float.toString(a0) + " " + Float.toString(a1));
+        //println(UART6, Float.toString(a0));
+
+        println("A0: "+a0+"   A1: "+a1); // this goes to the Android Monitor in Android Studio
 
 
         // read I2C accelerometer and print to UART
@@ -71,7 +74,7 @@ public class Hw3TemplateApp extends SimplePicoPro {
         }
 
 
-        delay(100);
+        delay(75);
 
     }
 }
